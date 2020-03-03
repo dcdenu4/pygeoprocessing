@@ -53,6 +53,7 @@ jobs:
           conda install --file requirements.txt
           conda install $PACKAGES
           python setup.py install
+          printenv
 
     - name: Lint with flake8
       run: |
