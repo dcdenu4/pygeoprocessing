@@ -50,6 +50,9 @@ jobs:
 
     - name: Install PyGeoprocessing (Linux, Mac)
       if: matrix.os != 'windows-latest'
+      env:
+          GDAL_DATA: /usr/share/miniconda/share/gdal/
+          PROJ_LIB: /usr/share/miniconda/share/proj/
       run: |
           conda install --file requirements.txt
           conda install $PACKAGES
@@ -57,8 +60,6 @@ jobs:
           printenv
           which python
           find /usr -name proj.db
-          export PROJ_LIB=/usr/share/miniconda/share/proj/
-          export GDAL_DATA=/usr/share/miniconda/share/gdal/
 
     - name: Lint with flake8
       run: |
