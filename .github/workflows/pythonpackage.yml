@@ -54,6 +54,7 @@ jobs:
           conda install $PACKAGES
           python setup.py install
           printenv
+          python -c "from osgeo import gdal;import os;print(os.environ['GDAL_DATA']);"
 
     - name: Lint with flake8
       run: |
