@@ -54,6 +54,8 @@ jobs:
           GDAL_DATA: /usr/share/miniconda/share/gdal/
           PROJ_LIB: /usr/share/miniconda/share/proj/
       run: |
+          conda create -p ./tvenv python=3.7
+          conda activate ./tvenv
           conda install --file requirements.txt
           conda install $PACKAGES
           python setup.py install
