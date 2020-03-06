@@ -104,7 +104,7 @@ def projection_wkt(epsg_id):
 
 
 SRS_COLOMBIA = ReferenceData(
-    projection=projection_wkt(3157),
+    projection=projection_wkt(3116),
     origin=(444720, 3751320),
     pixel_size=lambda x: (x, -1. * x)
 )
