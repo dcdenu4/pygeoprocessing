@@ -25,7 +25,7 @@ jobs:
       with:
         update-conda: false
         python-version: ${{ matrix.python-version }}
-        activate-conda: false
+        activate-conda: true
         conda-channels: anaconda, conda-forge
     - name: Install dependencies
       shell: bash
@@ -56,7 +56,7 @@ jobs:
           python setup.py install
           printenv
           find /usr -name proj.db 
-          ls -l /usr/share/miniconda/share/gdal/
+          ls -l /usr/share/miniconda/share/proj/
 
     - name: Lint with flake8
       run: |
