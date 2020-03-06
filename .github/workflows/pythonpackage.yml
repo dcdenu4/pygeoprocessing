@@ -23,10 +23,10 @@ jobs:
     - name: setup-conda
       uses: s-weigand/setup-conda@v1.0.2
       with:
-        update-conda: false
+        update-conda: true
         python-version: ${{ matrix.python-version }}
         activate-conda: true
-        conda-channels: anaconda, conda-forge
+        conda-channels: conda-forge
     - name: Install dependencies
       shell: bash
       run: conda upgrade -y pip setuptools
@@ -58,8 +58,8 @@ jobs:
           conda install $PACKAGES
           python setup.py install
           printenv
-          which python
-          find /usr -name proj.db
+          find /usr -name proj.db 
+          ls -l /usr/share/miniconda/share/gdal/
 
     - name: Lint with flake8
       run: |
