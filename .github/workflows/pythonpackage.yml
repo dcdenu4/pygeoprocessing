@@ -20,13 +20,12 @@ jobs:
           # Fetch all history so that setuptool_scm can build the correct version string.
           fetch-depth: 0
 
-    - name: setup-conda
-      uses: s-weigand/setup-conda@v1.0.2
+    - name: setup-miniconda
+      uses: goanpeca/setup-miniconda@v1
       with:
-        update-conda: false
-        python-version: ${{ matrix.python-version }}
-        activate-conda: true
-        conda-channels: anaconda, conda-forge
+        activate-environment: anaconda-client-env
+        python-version: 3.7
+        auto-activate-base: true
     - name: Install dependencies
       shell: bash
       run: conda upgrade -y pip setuptools
@@ -41,6 +40,10 @@ jobs:
           printenv
           find /usr -name proj.db
 
+    - name: Test with pytest
+      shell: bash -l {0}
+      run: pytest -s
+      
     - name: Test with pytest
       shell: bash -l {0}
       run: pytest -s
