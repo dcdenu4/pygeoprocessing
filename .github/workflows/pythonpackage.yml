@@ -23,10 +23,10 @@ jobs:
     - name: setup-conda
       uses: s-weigand/setup-conda@v1.0.2
       with:
-        update-conda: true
+        update-conda: false
         python-version: ${{ matrix.python-version }}
-        activate-conda: true
-        conda-channels: conda-forge
+        activate-conda: false
+        conda-channels: anaconda, conda-forge
     - name: Install dependencies
       shell: bash
       run: conda upgrade -y pip setuptools
@@ -50,12 +50,7 @@ jobs:
 
     - name: Install PyGeoprocessing (Linux, Mac)
       if: matrix.os != 'windows-latest'
-      env:
-          GDAL_DATA: /usr/share/miniconda/share/gdal/
-          PROJ_LIB: /usr/share/miniconda/share/proj/
       run: |
-          conda create -p ./tvenv python=3.7
-          conda activate ./tvenv
           conda install --file requirements.txt
           conda install $PACKAGES
           python setup.py install
