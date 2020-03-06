@@ -33,13 +33,16 @@ jobs:
 
     - name: Install PyGeoprocessing (Linux, Mac)
       if: matrix.os != 'windows-latest'
+      env:
+          GDAL_DATA: /usr/share/miniconda/share/gdal/
+          PROJ_LIB: /usr/share/miniconda/share/proj/
       run: |
           conda install --file requirements.txt
           conda install $PACKAGES
           python setup.py install
           printenv
           find /usr -name proj.db 
-          ls -l /usr/share/miniconda/share/proj/
+          ls -l /usr/share/miniconda/share/gdal/
 
     - name: Test with pytest
-      run: pytest
+      run: pytest -s

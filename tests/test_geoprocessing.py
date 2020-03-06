@@ -15,7 +15,7 @@ import numpy
 import scipy.ndimage
 import shapely.geometry
 
-#print("GDAL_DATA ENV: ", print(os.environ['GDAL_DATA']))
+print("GDAL_DATA ENV: ", os.environ)
 
 def passthrough(x):
     """Use in testing simple raster calculator calls."""
