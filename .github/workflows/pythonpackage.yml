@@ -11,8 +11,8 @@ jobs:
       fail-fast: false
       max-parallel: 4
       matrix:
-        python-version: [3.7]
-        os: [ubuntu-18.04]
+        python-version: [3.6, 3.7]
+        os: [ubuntu-18.04, windows-latest, macos-latest]
 
     steps:
     - uses: actions/checkout@v2
@@ -24,11 +24,28 @@ jobs:
       uses: goanpeca/setup-miniconda@v1
       with:
         activate-environment: anaconda-client-env
-        python-version: 3.7
+        python-version: ${{ matrix.python-version }}
         auto-activate-base: true
     - name: Install dependencies
       shell: bash
       run: conda upgrade -y pip setuptools
+
+    - name: Install PyGeoprocessing (Windows)
+      if: matrix.os == 'windows-latest'
+      env:
+          PIP_EXTRA_INDEX_URL: "http://pypi.naturalcapitalproject.org/simple/"
+          PIP_TRUSTED_HOST: "pypi.naturalcapitalproject.org"
+          PIP_PREFER_BINARY: 1
+      shell: bash
+      # Replace numpy and scipy with PyPI versions to circumvent import issue.
+      # https://stackoverflow.com/a/37110747/299084
+      #
+      # Shapely 1.7.0 on PyPI has GEOS cdll issues in some environments. Gohlke builds work.
+      run: |
+          $CONDA/python -m pip install shapely --index-url http://pypi.naturalcapitalproject.org/simple/ -c requirements.txt
+          $CONDA/python -m pip install -r requirements.txt
+          $CONDA/python -m pip install $PACKAGES
+          $CONDA/python setup.py install
 
     - name: Install PyGeoprocessing (Linux, Mac)
       if: matrix.os != 'windows-latest'
@@ -37,13 +54,16 @@ jobs:
           conda install --file requirements.txt
           conda install $PACKAGES
           python setup.py install
-          printenv
-          find /usr -name proj.db
+
+    - name: Lint with flake8
+      shell: bash -l {0}
+      run: |
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
     - name: Test with pytest
       shell: bash -l {0}
       run: pytest -s
-      
-    - name: Test with pytest
-      shell: bash -l {0}
-      run: pytest -s
+
