@@ -38,7 +38,7 @@ jobs:
           PIP_EXTRA_INDEX_URL: "http://pypi.naturalcapitalproject.org/simple/"
           PIP_TRUSTED_HOST: "pypi.naturalcapitalproject.org"
           PIP_PREFER_BINARY: 1
-      shell: bash
+      shell: bash -l {0}
       # Replace numpy and scipy with PyPI versions to circumvent import issue.
       # https://stackoverflow.com/a/37110747/299084
       #
