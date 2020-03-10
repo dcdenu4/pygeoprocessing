@@ -23,7 +23,7 @@ jobs:
     - name: setup-miniconda
       uses: goanpeca/setup-miniconda@v1
       with:
-        auto-update-conda: true
+        auto-update-conda: false
         activate-environment: anaconda-client-env
         condarc-file: .github/workflows/pythonpackage-condarc.yml
         python-version: ${{ matrix.python-version }}
