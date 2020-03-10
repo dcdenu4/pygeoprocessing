@@ -29,7 +29,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
         auto-activate-base: true
     - name: Install dependencies
-      shell: bash
+      shell: bash -l {0}
       run: conda upgrade -y pip setuptools
 
     - name: Install PyGeoprocessing (Windows)
