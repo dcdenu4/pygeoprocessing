@@ -23,6 +23,7 @@ jobs:
     - name: setup-miniconda
       uses: goanpeca/setup-miniconda@v1
       with:
+        auto-update-conda: true
         activate-environment: anaconda-client-env
         python-version: ${{ matrix.python-version }}
         auto-activate-base: true
