@@ -44,7 +44,8 @@ jobs:
       #
       # Shapely 1.7.0 on PyPI has GEOS cdll issues in some environments. Gohlke builds work.
       run: |
-          export PATH=$PATH:"C:/Miniconda/Scripts/"
+          export PATH=$PATH:"C:/Miniconda/"
+          echo $PATH
           $CONDA/python -m pip install shapely --index-url http://pypi.naturalcapitalproject.org/simple/ -c requirements.txt
           $CONDA/python -m pip install -r requirements.txt
           conda install $PACKAGES
