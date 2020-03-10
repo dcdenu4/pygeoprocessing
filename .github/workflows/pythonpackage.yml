@@ -23,7 +23,7 @@ jobs:
     - name: setup-miniconda
       uses: goanpeca/setup-miniconda@v1
       with:
-        auto-update-conda: false
+        auto-update-conda: true
         activate-environment: anaconda-client-env
         condarc-file: .github/workflows/pythonpackage-condarc.yml
         python-version: ${{ matrix.python-version }}
@@ -46,7 +46,7 @@ jobs:
       run: |
           $CONDA/python -m pip install shapely --index-url http://pypi.naturalcapitalproject.org/simple/ -c requirements.txt
           $CONDA/python -m pip install -r requirements.txt
-          $CONDA/python -m pip install $PACKAGES
+          conda install $PACKAGES
           $CONDA/python setup.py install
 
     - name: Install PyGeoprocessing (Linux, Mac)
