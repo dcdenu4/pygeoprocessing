@@ -25,6 +25,7 @@ jobs:
       with:
         auto-update-conda: true
         activate-environment: anaconda-client-env
+        condarc-file: pythonpackage-condarc.yml
         python-version: ${{ matrix.python-version }}
         auto-activate-base: true
     - name: Install dependencies
