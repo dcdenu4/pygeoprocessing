@@ -25,7 +25,7 @@ jobs:
       with:
         auto-update-conda: true
         activate-environment: anaconda-client-env
-        condarc-file: .github/workflows/pythonpackage-condarc.yml
+        condarc-file: .github/pythonpackage-condarc.yml
         python-version: ${{ matrix.python-version }}
         auto-activate-base: false
     - name: Install dependencies
@@ -44,12 +44,10 @@ jobs:
       #
       # Shapely 1.7.0 on PyPI has GEOS cdll issues in some environments. Gohlke builds work.
       run: |
-          export PATH=$PATH:"/c/Miniconda/"
-          echo $PATH
-          $CONDA/python -m pip install shapely --index-url http://pypi.naturalcapitalproject.org/simple/ -c requirements.txt
-          $CONDA/python -m pip install -r requirements.txt
+          python -m pip install shapely --index-url http://pypi.naturalcapitalproject.org/simple/ -c requirements.txt
+          python -m pip install -r requirements.txt
           conda install $PACKAGES
-          $CONDA/python setup.py install
+          python setup.py install
 
     - name: Install PyGeoprocessing (Linux, Mac)
       if: matrix.os != 'windows-latest'
