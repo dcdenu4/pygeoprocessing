@@ -25,9 +25,9 @@ jobs:
       with:
         auto-update-conda: true
         activate-environment: anaconda-client-env
-        condarc-file: .github/pythonpackage-condarc.yml
         python-version: ${{ matrix.python-version }}
         auto-activate-base: false
+        channels: conda-forge, anaconda
     - name: Install dependencies
       shell: bash -l {0}
       run: conda upgrade -y pip setuptools
@@ -51,12 +51,14 @@ jobs:
 
     - name: Install PyGeoprocessing (Linux, Mac)
       if: matrix.os != 'windows-latest'
+      shell: bash -l {0}
       run: |
           conda install --file requirements.txt
           conda install $PACKAGES
           python setup.py install
 
     - name: Lint with flake8
+      shell: bash -l {0}
       run: |
         # stop the build if there are Python syntax errors or undefined names
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
@@ -64,5 +66,6 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
     - name: Test with pytest
+      shell: bash -l {0}
       run: pytest -s
 
